@@ -72,13 +72,9 @@ Use the inning function below to do the following:
 NOTE: This will be a callback function for the tasks below
 */
 
-function inning(inningcb){
-    function points(){
+function inning(){
       return Math.floor(Math.random() * 3);
-    }
-    return points();
 }
-
 
 /* ⚾️⚾️⚾️ Task 3: finalScore() ⚾️⚾️⚾️
 Use the finalScore function below to do the following:
@@ -94,17 +90,55 @@ Use the finalScore function below to do the following:
 }
 */ 
 
-function finalScore(/*code Here*/){
-  /*Code Here*/
+function finalScore(inningcb, innings){
+  let homeScore = 0;
+  let awayScore = 0;
+  for(let i = 0; i < innings; i++){
+    homeScore = homeScore + inningcb();
+    awayScore = awayScore + inningcb();
+  }
+  return {
+    Home: homeScore,
+    Away: awayScore
+  }
 }
+console.log(finalScore(inning, 8))
+
+// function finalScore(inningcb, totalInningsPlayed){
+//   const totalScore = [];
+//   function baseball (inningcb){
+//     return {
+//       Home: inningcb(),
+//       Away: inningcb()
+//     } 
+//   }
+//     for(let i = 0; i < 9; i++){
+//       const currentScore = inningcb();
+//       let homeScore = homeScore + currentScore.Home;
+//       let awayScore = awayScore + currentScore.Away;
+//       totalScore.push(`Inning ${i + 1} ${baseball()}`)
+//     }
+//   }//baseball end
+// const totalScore = [];
+// function baseball(inningcb){
+//   return {
+//     Home: inningcb(),
+//     Away: inningcb()
+//   }
+// }
+
+// console.log(finalScore(baseball, 9))
 
 /* ⚾️⚾️⚾️ Task 4: getInningScore() ⚾️⚾️⚾️
 Use the getInningScore() function below to do the following:
   1. Receive a callback function - you will pass in the inning function from task 2 as your argument 
   2. Return an object with a score for home and a score for away that populates from invoking the inning callback function */
 
-function getInningScore(/*Your Code Here */) {
-  /*Your Code Here */
+function getInningScore(inningcb) {
+  return {
+    Home: inningcb(),
+    Away: inningcb()
+  }
 }
 
 
@@ -114,7 +148,7 @@ Use the scoreboard function below to do the following:
   2. Receive the callback function `inning` from Task 2
   3. Receive a number of innings to be played
   4. Return an array where each of it's index values equals a string stating the
-  Home and Away team's scores for each inning.  Not the cummulative score.
+  Home and Away team's scores for each inning.  Not the cumulative score.
   5. If there's a tie at the end of the innings, add this message containing the score to the end of the array:  "This game will require extra innings: Away 12 - Home 12"  (see tie example below)
      If there isn't a tie, add this message to the end of the array: "Final Score: Away 13 - Home 11"  (see no tie example below)
   
@@ -149,9 +183,26 @@ Use the scoreboard function below to do the following:
 ]  
   */
 
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
+function scoreboard(getInningScoreCB, inningcb, innings) {
+  const eachInningScores = [];
+  let homeScore = 0;
+  let awayScore = 0;
+
+  for(let i = 0; i < innings; i++){
+    const currentScore = getInningScoreCB(inningcb);
+    homeScore = homeScore + currentScore.Home;
+    awayScore = awayScore + currentScore.Away;
+    eachInningScores.push(`Inning ${i +1}: Away ${currentScore.Away} - Home ${currentScore.Home}`)
+  } 
+  if(homeScore === awayScore){
+    eachInningScores.push(`This game will require extra innings: Away ${awayScore} - Home ${homeScore}`)
+  } else {
+    eachInningScores.push(`Final Score: Away ${awayScore} - Home ${homeScore}`)
+  }
+  return eachInningScores
 }
+
+console.log(scoreboard(getInningScore, inning, 9))
 
 
 
