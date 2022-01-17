@@ -82,8 +82,11 @@ dansRoll();
 ```
 
 a. Where is closure used in this code? How can you tell?
+It takes place when the anonymous function is invoked. Because that function is reaching out to the outer function to get the value. 
 b. Compare and contrast calling `dansRoll` the first and second time. What is always the same? What could change?
-c. What is the lexical scope of `newRoll`? 
+The 'Dan rolled a' is always the same. However, the number that he rolls is always random.
+c. What is the lexical scope of `newRoll`?
+newRoll only exists inside of the anonymous function. 
 
 
 ### Task 3 - Stretch Goals
